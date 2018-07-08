@@ -12,9 +12,8 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          
+          <p class="h5" style="text-align: center;">Data Training</p>
           <button onclick="window.location.href='index.php?halaman=training&act=add'">Tambah</button>
-
           </div>
         <div class="card-body">
             <?php
@@ -30,7 +29,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <?php
                 if(!@$_GET['act']){
-                  echo "<p><b2>Halaman hasil Process Klastering</b2></p>";
+                  
                   include 'config/koneksi.php';
                   include "Model/process-show-latih.php";
                 } 

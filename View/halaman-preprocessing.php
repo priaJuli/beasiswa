@@ -11,6 +11,9 @@
       </ol>
       <!-- Example DataTables Card-->
       <div class="card">
+        <div class="card-header">
+            <p class="h5" style="text-align: center;">Do Clasification BSM</p>
+        </div>
         <div class="center">
           <form class="form-horizontal" action="Model/process-naive-bayes.php" method="POST" target="_BLANK">
             <?php 

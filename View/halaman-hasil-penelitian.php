@@ -12,7 +12,7 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-         
+            <p class="h5" style="text-align: center;">Result Clasification Data Testing</p>
         </div>
         <div class="card-body">
         
