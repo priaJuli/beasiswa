@@ -2,9 +2,7 @@
 
 ini_set('max_execution_time', 300);
 
-
-$show_latih = mysqli_query($DBcon, "SELECT * FROM data_testing");
-
+$show_latih = mysqli_query($DBcon, "SELECT * FROM `data_training` ORDER BY id DESC");
 
 ?>
 <thead>
@@ -18,7 +16,7 @@ $show_latih = mysqli_query($DBcon, "SELECT * FROM data_testing");
       <th>Kondisi</th>
       <th>Status</th>
       <th>Kelayakan</th>
-      
+      <th>Action</th>
     </tr>
   </thead>
   <tfoot>
@@ -32,7 +30,7 @@ $show_latih = mysqli_query($DBcon, "SELECT * FROM data_testing");
       <th>Kondisi</th>
       <th>Status</th>
       <th>Kelayakan</th>
-      
+      <th>Action</th>
       
     </tr>
   </tfoot>
@@ -47,6 +45,8 @@ ini_set('max_execution_time', 300);
 //$tweet = $_POST["text"];
 
 //end foreach string1
+
+  
   
   foreach ($show_latih as $result12) {
   ?>
@@ -59,8 +59,8 @@ ini_set('max_execution_time', 300);
       <td><?php echo $result12["tanggungan"];?></td>
       <td><?php echo $result12["kondisi_rumah"];?></td>
       <td><?php echo $result12["status_rumah"];?></td>
-      <td><?php echo $result12["kesimpulan"];?></td>
-      
+      <td><?php echo $result12["keterangan"];?></td>
+      <td><a href="index.php?halaman=training&act=edit&id=<?php echo $result12['id'];?>"><i class="fa fa-edit fa-fw"></i></a> | <a href="index.php?halaman=training&act=del&id=<?php echo $result12['id'];?>"><i class="fa fa-trash fa-fw"></i></a> </td>
     </tr>
     <?php
   }

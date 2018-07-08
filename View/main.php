@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper" id="main-content">
         <div class="container-fluid">
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
@@ -7,16 +7,16 @@
         </li>
         <li class="breadcrumb-item active">Tentang Sistem</li>
       </ol>
-      <div class="row">
-        <p class="h6">Klasterisasi Tweet Biznet adalah sebuah aplikasi web yang dibuat dengan tujuan untuk membantu mengelompokan tweet yang dikirimkan 
+      <div class="row" id="main">
+        <p class="h5">Klasterisasi Tweet Biznet adalah sebuah aplikasi web yang dibuat dengan tujuan untuk membantu mengelompokan tweet yang dikirimkan 
         pada akun BiznetHome. Metode klastering yang diimplementasikan adalah metode klastering K-Means, data yang digunakan adalah data text
         tweet.</p>
-        <p class="h6">Pada aplikasi web ini menggunakan pendekatan vector space model untuk mentransformasikan text data untuk dapat dilakukan
+        <p class="h5">Pada aplikasi web ini menggunakan pendekatan vector space model untuk mentransformasikan text data untuk dapat dilakukan
         klastering. <br>Aplikasi web ini merupakan klasterisasi text, mempunyai perbedaan antara klastering data numeric dengan klastering data text.
         </p>
-        <p class="h6">Text Mining merupakan bidang studi lain dari data mining, hanya saja data yang digunakan adalah data text.
+        <p class="h5">Text Mining merupakan bidang studi lain dari data mining, hanya saja data yang digunakan adalah data text.
         <br>Text Mining memiliki tahapan text preprocessing yang meliputi proses tokenization, filtering, stemming, case folding, dan stopword removal.</p>
-        <p class="h6">Aplikasi ini akan memproses data tweet yang didapatkan dari API Twitter TwitterOAuth dengan menampilkan data tiap proses berbentuk tabel.
+        <p class="h5">Aplikasi ini akan memproses data tweet yang didapatkan dari API Twitter TwitterOAuth dengan menampilkan data tiap proses berbentuk tabel.
         Proses-proses dalam aplikasi ini meliputi :</p>
         <ul>
           <li>Get Twitter</li>

@@ -10,6 +10,7 @@
   <title>Klastering Tweet - Home</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="vendor/css/bootstrap.min.css">
   <!-- Custom fonts for this template-->
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
@@ -17,6 +18,9 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <style>
+  a{
+    color: #b30000;
+  }
   p{
     color: #242729;
     padding-left: 5px;
@@ -30,14 +34,60 @@
     font-size: 1rem;
     line-height: 1.54;
   }
+  .bg-gray{
+    background-color: lightblue;
+  }
+  #exampleAccordion{
+    background-color: #4d4dff;
+    border-color: black;
+  }
+  .navbar-right{
+    position: fixed;
+    top: 15px;
+    right: 16px;
+    font-size: 18px;
+  }
+  .navbar{
+    background-color: lightblue
+  }
+  input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .center{
+    margin: auto;
+  }
+  span{
+    padding-right: 15px;
+    width: 100px;
+
+  }
   </style>
+  
+  
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer bg-gray" id="page-top">
   
   <?php
-      include "View/navbar.php";
-      include "Control/main-control.php";
+    include "View/navbar.php";
+    include "Control/main-control.php";  
+      // session_start();
+      // if(isset($_SESSION['user'])){
+      //     // include "View/navbar.php";
+      //     include "View/login.php";
+      // }else{
+      //   echo($_SESSION['user']);
+      //   if($_SESSION['role'] == 'admin'){
+      //      include "View/navbar.php";
+      //      include "Control/main-control.php";  
+      //   }elseif ($_SESSION['role'] == 'member'){
+      //      include "View/navbar-member.php";
+      //      include "Control/main-control.php";
+      //   }
+          
+      // }
+      
   ?>
   
     <!-- /.container-fluid-->

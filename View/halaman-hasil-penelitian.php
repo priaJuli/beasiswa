@@ -12,8 +12,7 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <button onclick="window.open('View/chart-klaster.php','_blank')">Graph hasil klaster</button>
-          <button onclick="window.open('View/chart-validasi.php','_blank')">Graph validasi BDI</button>
+         
         </div>
         <div class="card-body">
         

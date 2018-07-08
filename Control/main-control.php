@@ -9,8 +9,8 @@
       }elseif($_GET['halaman'] == 'preprocessing') {
         include_once "View/halaman-preprocessing.php"; 
 
-      }elseif($_GET['halaman'] == 'klastering') {
-        include_once "View/halaman-klastering.php"; 
+      }elseif($_GET['halaman'] == 'training') {
+        include_once "View/halaman-training.php"; 
 
       }elseif($_GET['halaman'] == 'hasil-penelitian') {
         include_once "View/halaman-hasil-penelitian.php"; 

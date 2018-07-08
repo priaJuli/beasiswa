@@ -1,21 +1,36 @@
 
 <?php 
-// ini_set('max_execution_time', 4800);
-// include '../config/koneksi.php';
-  
- //  $DBcon = new MySQLi($DBhost,$DBuser,$DBpass,$DBname);
-    
- //     if ($DBcon->connect_errno) {
- //         die("ERROR : -> ".$DBcon->connect_error);
- //     }
+		ini_set('max_execution_time', 4800);
+		
+// process_prob();
+// process_prob_try();
+// process_prob_bab3();
 
-	// $tweet = mysqli_query($DBcon, "SELECT * FROM `term_text_twitter`");
-	// $string1 = array();
-	// $k = 0;
-	
-	process_naive("tidak_tetap", ">1000", "ada", "layak", "kontrak", "tidak", "tanah");
+	// process_naive("TIDAK TETAP", "500RB-1JT", "SEDANG", "SEDERHANA", "KONTRAK");
+		
+// process_naive("TETAP", "500RB-1JT", "BANYAK", "SEDERHANA", "NUMPANG");
+	if(isset($_POST['naive'])){
+		$nama = $_POST['nama'];
+		$NISN = $_POST['NISN'];
+		$surat = $_POST['surat'];
+		$work = $_POST['work'];
+		$salary = $_POST['salary'];
+		$respon = $_POST['respon'];
+		$condt = $_POST['condt'];
+		$status = $_POST['status'];
+		if($_POST['data-training'] == 'real'){
+			$tabel = "data_training";
+		}elseif($_POST['data-training'] == 'coba'){
+			$tabel = "data_training_try";
+		}else{
+			$tabel = "data_training_bab3";
+		}
+		$result = process_naive($work, $salary, $respon, $condt, $status);
+		echo "Hasil ".$result;
+	}
+// process_naive("TETAP", ">1JT", "BANYAK", "LAYAK", "PRIBADI");
 
-	function process_naive($work, $salary, $respon, $condt, $stts, $bank, $floor){
+	function naive_testing(){
 		$DBcon = mysqli_connect("localhost", "root", "", "datmin_beasiswa");
 
 		/* check connection */
@@ -23,190 +38,226 @@
 		    printf("Connect failed: %s\n", mysqli_connect_error());
 		    exit();
 		}
-		$totaldata = array();
-		$qu = "SELECT COUNT(*) FROM data_training WHERE keterangan = 'yes';";
-		$qu .= "SELECT COUNT(*) FROM data_training WHERE keterangan = 'no';";
-		$qu .= "SELECT COUNT(*) FROM data_training;";
-		if(mysqli_multi_query($DBcon, $qu)){
-			do{
-				if($res1 = mysqli_store_result($DBcon)){
-					while ($row1 = mysqli_fetch_row($res1)) {
-						array_push($totaldata, $row1[0]);
-					}
-				}
-			} while(mysqli_next_result($DBcon));
-		}
-		$probyes = array();
-		$query = "SELECT * FROM data_training WHERE keterangan = 'yes';";
+		
+		// process_prob();
+
+		$query = "SELECT * FROM data_testing";
 		$result1 = mysqli_query($DBcon, $query);
-		while ($row2 = $result1->fetch_assoc()) {
-			// pekerjaan ortu
-			if(!isset($probyes["work"]) && ($row2["pekerja_ortu"] == $work)){
-				$probyes["work"] = array("value" => $row2["pekerja_ortu"], "count" => 1);				
-			}elseif($row2["pekerja_ortu"] == $work){
-				$probyes["work"]["count"]++;
-			}
-			 
-			// pendapatan ortu
-			if(!isset($probyes["salary"]) && ($row2["pend_ortu"] == $salary)){
-				$probyes["salary"] = array("value" => $row2["pend_ortu"], "count" => 1);				
-			}elseif($row2["pend_ortu"] == $salary){
-				$probyes["salary"]["count"]++;
-			}
+		while ($row2 = $result1->fetch_assoc()){
+			// echo 'Siswa dengan NISN '.$row2['NISN']." prediksi ";
+			$nisn = $row2['NISN'];
+			$res_layak = process_naive($row2['pekerja_ortu'], $row2['pend_ortu'], $row2['tanggungan'], $row2['kondisi_rumah'], $row2['status_rumah']);
+			// echo $res_layak."<br>";
+							// echo "NISN ".$row2['NISN']." Berhasil hasil kelayakan ".$res_layak."<br>";
 
-			// Tanggungan
-			if(!isset($probyes["tanggungan"]) && ($row2["tanggungan"] == $respon)){
-				$probyes["tanggungan"] = array("value" => $row2["tanggungan"], "count" => 1);				
-			}elseif($row2["tanggungan"] == $respon){
-				$probyes["tanggungan"]["count"]++;
+			$update_layak = mysqli_query($DBcon, "UPDATE data_testing SET kesimpulan='$res_layak' WHERE NISN=$nisn");
+			if($update_layak){
+				// echo "NISN ".$row2['NISN']." Berhasil hasil kelayakan ".$res_layak."<br>";
+			}else{
+				// echo "GAGAL";
 			}
-
-			// kondisi rumah
-			if(!isset($probyes["kondisi_rumah"]) && ($row2["kondisi_rumah"] == $condt)){
-				$probyes["kondisi_rumah"] = array("value" => $row2["kondisi_rumah"], "count" => 1);				
-			}elseif($row2["kondisi_rumah"] == $condt){
-				$probyes["kondisi_rumah"]["count"]++;
-			}
-
-			// status rumah
-			if(!isset($probyes["status_rumah"]) && ($row2["status_rumah"] == $stts)){
-				$probyes["status_rumah"] = array("value" => $row2["status_rumah"], "count" => 1);				
-			}elseif($row2["status_rumah"] == $stts){
-				$probyes["status_rumah"]["count"]++;
-			}
-
-			// tabungan
-			if(!isset($probyes["tabungan"]) && ($row2["tabungan"] == $bank)){
-				$probyes["tabungan"] = array("value" => $row2["tabungan"], "count" => 1);				
-			}elseif($row2["tabungan"] == $bank){
-				$probyes["tabungan"]["count"]++;
-			}
-
-			// jenis_lantai
-			if(!isset($probyes["jenis_lantai"]) && ($row2["jenis_lantai"] == $floor)){
-				$probyes["jenis_lantai"] = array("value" => $row2["jenis_lantai"], "count" => 1);				
-			}elseif($row2["jenis_lantai"] == $floor){
-				$probyes["jenis_lantai"]["count"]++;
-			}
-		}
-		$probno = array();
-
-		$query = "SELECT * FROM data_training WHERE keterangan = 'no';";
-		$result2 = mysqli_query($DBcon, $query);
-		while ($row3 = $result2->fetch_assoc()) {
-			// pekerjaan ortu
-			if(!isset($probno["work"]) && ($row3["pekerja_ortu"] == $work)){
-				$probno["work"] = array("value" => $row3["pekerja_ortu"], "count" => 1);				
-			}elseif($row3["pekerja_ortu"] == $work){
-				$probno["work"]["count"]++;
-			}
-			 
-			// pendapatan ortu
-			if(!isset($probno["salary"]) && ($row3["pend_ortu"] == $salary)){
-				$probno["salary"] = array("value" => $row3["pend_ortu"], "count" => 1);				
-			}elseif($row3["pend_ortu"] == $salary){
-				$probno["salary"]["count"]++;
-			}
-
-			// Tanggungan
-			if(!isset($probno["tanggungan"]) && ($row3["tanggungan"] == $respon)){
-				$probno["tanggungan"] = array("value" => $row3["tanggungan"], "count" => 1);				
-			}elseif($row3["tanggungan"] == $respon){
-				$probno["tanggungan"]["count"]++;
-			}
-
-			// kondisi rumah
-			if(!isset($probno["kondisi_rumah"]) && ($row3["kondisi_rumah"] == $condt)){
-				$probno["kondisi_rumah"] = array("value" => $row3["kondisi_rumah"], "count" => 1);				
-			}elseif($row3["kondisi_rumah"] == $condt){
-				$probno["kondisi_rumah"]["count"]++;
-			}
-
-			// status rumah
-			if(!isset($probno["status_rumah"]) && ($row3["status_rumah"] == $stts)){
-				$probno["status_rumah"] = array("value" => $row3["status_rumah"], "count" => 1);				
-			}elseif($row3["status_rumah"] == $stts){
-				$probno["status_rumah"]["count"]++;
-			}
-
-			// tabungan
-			if(!isset($probno["tabungan"]) && ($row3["tabungan"] == $bank)){
-				$probno["tabungan"] = array("value" => $row3["tabungan"], "count" => 1);				
-			}elseif($row3["tabungan"] == $bank){
-				$probno["tabungan"]["count"]++;
-			}
-
-			// jenis_lantai
-			if(!isset($probno["jenis_lantai"]) && ($row3["jenis_lantai"] == $floor)){
-				$probno["jenis_lantai"] = array("value" => $row3["jenis_lantai"], "count" => 1);				
-			}elseif($row3["jenis_lantai"] == $floor){
-				$probno["jenis_lantai"]["count"]++;
-			}
-			 
-		}
-		// print_r($probno);
-		echo "Probabilitas no<br>";
-		$nilai_attr = 0;
-		$nilai_nb_no = 1;
-		$inti = 0;
-		$sqlprob = ""
-		while (list($key, $listdata) = each($probno)) {
-		       $inti++;
-		       echo "".$key."  ";
-		       while (list($value, $count) = each($listdata)) {
-		       	
-		       	
-		       	if($value == 'count'){
-		       		$nilai_attr = $count / $totaldata[1];
-		       		echo $count."/".$totaldata[1];
-		       	}else{
-		       		echo $value .' == '.$count;echo "<br>";
-		       	}
-		       }
-		       echo "Nilai prob attribut ".$nilai_attr."<br>";
-		       $nilai_nb_no *= number_format($nilai_attr, 3);
-		}
-
-		echo $totaldata[0]."/".$totaldata[2];
-		$nilai_nb_no *= $totaldata[1] / $totaldata[2];
-		if($inti < 7){
-			$nilai_nb_no = 0;
-		}
-		echo "<br>Nilai naive bayes NO = ".$nilai_nb_no."<br>";
-		echo "<br>";
-		// print_r($probyes);
-		echo "Probabilitas yes<br>";
-		$nilai_attr = 0;
-		$nilai_nb_yes = 1;
-		$inti = 0;
-		while (list($key, $listdata) = each($probyes)) {
-			$inti++; 
-		       echo "".$key."  ";
-		       while (list($value, $count) = each($listdata)) {
-		       	
-		       	
-		       	if($value == 'count'){
-		       		$nilai_attr = $count / $totaldata[0];
-		       		echo $count."/".$totaldata[0];
-		       	}else{
-		       		echo $value .' == '.$count;echo "<br>";
-		       	}
-		       }
-		       echo "Nilai prob attribut ".$nilai_attr."<br>";
-		       $nilai_nb_yes *= number_format($nilai_attr, 3);
-		}
-		echo $totaldata[0]."/".$totaldata[2];
-		$nilai_nb_yes *= $totaldata[0] / $totaldata[2];
-		if($inti < 7){
-			$nilai_nb_no = 0;
-		}
-		echo "<br>Nilai naive bayes YES = ".$nilai_nb_yes."<br><br>";
-
-		if($nilai_nb_yes > $nilai_nb_no){
-			echo "Prediksi naive bayes termasuk ke dalam klasifikasi Yes";
-		}else{
-			echo "Prediksi naive bayes termasuk ke dalam klasifikasi No";
 		}
 	}
+
+	function process_naive($work, $salary, $respon, $condt, $stts){
+		$DBcon = mysqli_connect("localhost", "root", "", "datmin_beasiswa");
+
+		/* check connection */
+		if (mysqli_connect_errno()) {
+		    printf("Connect failed: %s\n", mysqli_connect_error());
+		    exit();
+		}
+		
+		$result1 = mysqli_query($DBcon, "SELECT * FROM prob_yes WHERE keterangan='LAYAK'");
+		$res_tot_yes = mysqli_query($DBcon, "SELECT SUM(value) AS total FROM prob_yes WHERE keterangan='LAYAK'");
+		$total_yes = $res_tot_yes->fetch_assoc()['total'] / 5;
+		$res_tot_no = mysqli_query($DBcon, "SELECT SUM(value) AS total FROM prob_yes WHERE keterangan='TIDAK LAYAK'");
+		$total_no = $res_tot_no->fetch_assoc()['total'] / 5;
+		
+		$hasil_layak = 1;
+		while ($row1 = $result1->fetch_assoc()) {
+			if($row1['atribut'] == 'pekerja_ortu'){
+				if($row1['text'] == $work){
+					$hasil_layak *= ($row1['value']/$total_yes);
+					// echo "<br>".$row1['value'].'/'.$total_yes;
+				}
+			}elseif($row1['atribut'] == 'pend_ortu'){
+				if($row1['text'] == $salary){
+					$hasil_layak *= ($row1['value']/$total_yes);
+					// echo "<br>".$row1['value'].'/'.$total_yes;
+				}
+			}elseif($row1['atribut'] =='tanggungan'){
+				if($row1['text'] == $respon){
+					$hasil_layak *= ($row1['value']/$total_yes);
+					// echo "<br>".$row1['value'].'/'.$total_yes;
+				}
+			}elseif($row1['atribut']=='kondisi_rumah'){
+				if($row1['text'] == $condt){
+					$hasil_layak *= ($row1['value']/$total_yes);
+					// echo "<br>".$row1['value'].'/'.$total_yes;
+				}
+			}elseif($row1['atribut'] == 'status_rumah'){
+				if($row1['text'] == $stts){
+					$hasil_layak *= ($row1['value']/$total_yes);
+					// echo "<br>".$row1['value'].'/'.$total_yes;
+				}
+			}
+		}
+		$hasil_layak *= ($total_yes/100);
+		$hasil_layak = number_format($hasil_layak, 8);
+		// echo "<br>".$hasil_layak;
+
+		$hasil_tidak = 1;
+		$result2 = mysqli_query($DBcon, "SELECT * FROM prob_yes WHERE keterangan='TIDAK LAYAK'");
+		while ($row1 = $result2->fetch_assoc()) {
+			if($row1['atribut'] == 'pekerja_ortu'){
+				if($row1['text'] == $work){
+					$hasil_tidak *= ($row1['value']/$total_no);
+					// echo "<br>".$row1['value'].'/'.$total_no;
+				}
+			}elseif($row1['atribut'] == 'pend_ortu'){
+				if($row1['text'] == $salary){
+					$hasil_tidak *= ($row1['value']/$total_no);
+					// echo "<br>".$row1['value'].'/'.$total_no;
+				}
+			}elseif($row1['atribut'] =='tanggungan'){
+				if($row1['text'] == $respon){
+					$hasil_tidak *= ($row1['value']/$total_no);
+					// echo "<br>".$row1['value'].'/'.$total_no;
+				}
+			}elseif($row1['atribut']=='kondisi_rumah'){
+				if($row1['text'] == $condt){
+					$hasil_tidak *= ($row1['value']/$total_no);
+					// echo "<br>".$row1['value'].'/'.$total_no;
+				}
+			}elseif($row1['atribut'] == 'status_rumah'){
+				if($row1['text'] == $stts){
+					$hasil_tidak *= ($row1['value']/$total_no);
+					// echo "<br>".$row1['value'].'/'.$total_no;
+				}
+			}
+		}
+		$hasil_tidak *= ($total_no/100);
+		$hasil_tidak = number_format($hasil_tidak, 8);
+		// echo "<br>".$hasil_tidak;
+		
+		if($hasil_tidak > $hasil_layak){
+			return "TIDAK LAYAK";
+		}else{
+			return "LAYAK";
+		}
+	}
+
+	function process_prob()
+	{
+		$DBcon = mysqli_connect("localhost", "root", "", "datmin_beasiswa");
+
+		/* check connection */
+		if (mysqli_connect_errno()) {
+		    printf("Connect failed: %s\n", mysqli_connect_error());
+		    exit();
+		}
+
+		$query = "SELECT * FROM data_training";
+		$result1 = mysqli_query($DBcon, $query);
+		while ($row1 = $result1->fetch_assoc()) {
+			$ket_layak = $row1["keterangan"];
+			// if($row1["keterangan"] == "LAYAK"){
+				foreach ($row1 as $atr => $value) {
+					if($atr != "id" && $atr != "NISN" && $atr != "nama" && $atr != "surat_miskin" && $atr != "keterangan") {
+						
+						$cek_atr = mysqli_query($DBcon, "SELECT * FROM prob_yes WHERE text='$value' AND atribut='$atr' AND keterangan='$ket_layak';");
+						// print_r($cek_atr);
+
+						if(mysqli_num_rows($cek_atr) < 1){
+							// echo " ATR YES";
+							
+							$insert_term = mysqli_query($DBcon, "INSERT INTO prob_yes(atribut,text,value,keterangan) VALUES ('$atr', '$value', 1, '$ket_layak')");	
+						}else{
+							$new_value = $cek_atr->fetch_assoc()['value'] +1;
+							$update_term = mysqli_query($DBcon, "UPDATE prob_yes SET value=$new_value WHERE text='$value' AND keterangan='$ket_layak';");
+							// echo "ATR ".$value." telah ada";
+						}
+					}
+				}
+			
+			// echo "<br>";
+		}
+	}
+
+	function process_prob_try()
+	{
+		$DBcon = mysqli_connect("localhost", "root", "", "datmin_beasiswa");
+
+		/* check connection */
+		if (mysqli_connect_errno()) {
+		    printf("Connect failed: %s\n", mysqli_connect_error());
+		    exit();
+		}
+
+		$query = "SELECT * FROM data_training_try";
+		$result1 = mysqli_query($DBcon, $query);
+		while ($row1 = $result1->fetch_assoc()) {
+			$ket_layak = $row1["keterangan"];
+			// if($row1["keterangan"] == "LAYAK"){
+				foreach ($row1 as $atr => $value) {
+					if($atr != "id" && $atr != "NISN" && $atr != "nama" && $atr != "surat_miskin" && $atr != "keterangan") {
+						
+						$cek_atr = mysqli_query($DBcon, "SELECT * FROM prob_yes_try WHERE text='$value' AND atribut='$atr' AND keterangan='$ket_layak';");
+						// print_r($cek_atr);
+
+						if(mysqli_num_rows($cek_atr) < 1){
+							// echo " ATR YES";
+							
+							$insert_term = mysqli_query($DBcon, "INSERT INTO prob_yes_try(atribut,text,value,keterangan) VALUES ('$atr', '$value', 1, '$ket_layak')");	
+						}else{
+							$new_value = $cek_atr->fetch_assoc()['value'] +1;
+							$update_term = mysqli_query($DBcon, "UPDATE prob_yes_try SET value=$new_value WHERE text='$value' AND keterangan='$ket_layak';");
+							// echo "ATR ".$value." telah ada";
+						}
+					}
+				}
+			
+			// echo "<br>";
+		}
+	}
+
+	function process_prob_bab3()
+	{
+		$DBcon = mysqli_connect("localhost", "root", "", "datmin_beasiswa");
+
+		/* check connection */
+		if (mysqli_connect_errno()) {
+		    printf("Connect failed: %s\n", mysqli_connect_error());
+		    exit();
+		}
+
+		$query = "SELECT * FROM data_training_bab3";
+		$result1 = mysqli_query($DBcon, $query);
+		while ($row1 = $result1->fetch_assoc()) {
+			$ket_layak = $row1["keterangan"];
+			// if($row1["keterangan"] == "LAYAK"){
+				foreach ($row1 as $atr => $value) {
+					if($atr != "id" && $atr != "NISN" && $atr != "nama" && $atr != "surat_miskin" && $atr != "keterangan") {
+						
+						$cek_atr = mysqli_query($DBcon, "SELECT * FROM prob_yes_bab3 WHERE text='$value' AND atribut='$atr' AND keterangan='$ket_layak';");
+						// print_r($cek_atr);
+
+						if(mysqli_num_rows($cek_atr) < 1){
+							// echo " ATR YES";
+							
+							$insert_term = mysqli_query($DBcon, "INSERT INTO prob_yes_bab3(atribut,text,value,keterangan) VALUES ('$atr', '$value', 1, '$ket_layak')");	
+						}else{
+							$new_value = $cek_atr->fetch_assoc()['value'] +1;
+							$update_term = mysqli_query($DBcon, "UPDATE prob_yes_bab3 SET value=$new_value WHERE text='$value' AND keterangan='$ket_layak';");
+							// echo "ATR ".$value." telah ada";
+						}
+					}
+				}
+			
+			// echo "<br>";
+		}
+	}
+
 ?>
 
