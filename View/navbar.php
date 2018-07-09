@@ -6,20 +6,17 @@
         </button>
     </div>
     <ul class="navbar-nav navbar-right">
-        <li>
-            <?php 
+        <li><?php 
             session_start(); 
             if(isset($_SESSION['user'])){
-                ?><h4 class="">  <?php 
+                ?><h4 class=""><?php 
                 echo $_SESSION['user']; ?></h4>
             <?php }
             else{
-                ?><h4 class="">Guest
+                ?><h4 class="">Guest</h4>
             <?php  
             }    
-            ?></h4>
-            
-        </li>
+            ?></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i>
@@ -28,7 +25,7 @@
                 <li><a href="#"><i class="fa fa-user fa-fw"></i> Profil User</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Keluar</a>
+                <li><a href="View/logout.php"><i class="fa fa-sign-out fa-fw"></i> Keluar</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->

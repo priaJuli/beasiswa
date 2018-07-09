@@ -1,3 +1,4 @@
+<?php ini_set('display_errors',0); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,23 +71,25 @@
 <body class="fixed-nav sticky-footer bg-gray" id="page-top">
   
   <?php
-    include "View/navbar.php";
-    include "Control/main-control.php";  
-      // session_start();
-      // if(isset($_SESSION['user'])){
-      //     // include "View/navbar.php";
-      //     include "View/login.php";
-      // }else{
-      //   echo($_SESSION['user']);
-      //   if($_SESSION['role'] == 'admin'){
-      //      include "View/navbar.php";
-      //      include "Control/main-control.php";  
-      //   }elseif ($_SESSION['role'] == 'member'){
-      //      include "View/navbar-member.php";
-      //      include "Control/main-control.php";
-      //   }
+
+    // include "View/navbar.php";
+    // include "Control/main-control.php";  
+      session_start();
+      if(!isset($_SESSION['user'])){
+          // include "View/navbar.php";
+          header("Location: View/login.php");
+          // include "View/login.php";
+      }else{
+        echo($_SESSION['user']);
+        if($_SESSION['role'] == 'admin'){
+           include "View/navbar.php";
+           include "Control/main-control.php";  
+        }elseif ($_SESSION['role'] == 'member'){
+           include "View/navbar-member.php";
+           include "Control/main-control.php";
+        }
           
-      // }
+      }
       
   ?>
   
