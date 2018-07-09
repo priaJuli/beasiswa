@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-default fixed-top" id="mainNav">
     <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">Klasterisasi Tweet Biznet</a>
+        <a class="navbar-brand" href="index.php">Klasifikasi Kelayakan BSM</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
