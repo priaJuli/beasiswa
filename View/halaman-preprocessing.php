@@ -15,7 +15,7 @@
             <p class="h5" style="text-align: center;">Do Clasification BSM</p>
         </div>
         <div class="center">
-          <form class="form-horizontal" action="Model/process-naive-bayes.php" method="POST" target="_BLANK">
+          <form class="form-horizontal" action="Model/process-naive-bayes.php" method="POST">
             <?php 
               if(isset($_POST['data-training'])){
                 $data_T = $_POST['data-training'];
@@ -51,7 +51,7 @@
                 <select class="form-control" name="surat" required>
                   <option value="">-- Pilih --</option>
                   <option value="ADA">Ada</option>
-                  <option value="TIDAK ADA">Tidak Ada</option>
+                  <option value="TIDAK">Tidak Ada</option>
                 </select>
               </div>
             </div>

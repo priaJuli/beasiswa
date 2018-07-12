@@ -8,6 +8,7 @@
         <li class="breadcrumb-item active">Tentang Sistem</li>
       </ol>
       <div class="row" id="main">
+        <br><img src="css/logo.png" alt="logo" class="center">
         <p class="h5">Aplikasi Kelayakan Beasiswa BSM ini adalah sebuah aplikasi web yang dibuat untuk membantu
         menentukan apakah seorang siswa layak mendapatkan beasiswa. Aplikasi ini dibuat untuk tujuan pendidikan
         demi menyelesaikan studi di Universitas Dian Nuswantoro dengan object penelitian adalah data siswa SMA 14 Semarang.</p>

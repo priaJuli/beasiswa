@@ -17,7 +17,7 @@
 
       <div class="row" id="main" >
           <div class="center">
-            <br><img src="../css/logosma.jpg" alt="logo">
+            <br><img src="../css/logo.png" alt="logo">
             <br>
             <br>
              <p ><strong class="judul" >Aplikasi Beasiswa BSM</strong></p><br> 

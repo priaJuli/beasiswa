@@ -9,6 +9,15 @@
 	// process_naive("TIDAK TETAP", "500RB-1JT", "SEDANG", "SEDERHANA", "KONTRAK");
 		
 // process_naive("TETAP", "500RB-1JT", "BANYAK", "SEDERHANA", "NUMPANG");
+	$DBcon = mysqli_connect("localhost", "root", "", "datmin_beasiswa");
+
+		/* check connection */
+		if (mysqli_connect_errno()) {
+		    printf("Connect failed: %s\n", mysqli_connect_error());
+		    exit();
+		}
+
+
 	if(isset($_POST['naive'])){
 		$nama = $_POST['nama'];
 		$NISN = $_POST['NISN'];
@@ -26,7 +35,13 @@
 			$tabel = "data_training_bab3";
 		}
 		$result = process_naive($work, $salary, $respon, $condt, $status);
-		echo "Hasil ".$result;
+		$q_ins = mysqli_query($DBcon, "INSERT INTO data_testing(id,NISN,nama,surat_miskin,pekerja_ortu,pend_ortu,tanggungan,
+        kondisi_rumah,status_rumah,kesimpulan) VALUES ('', $NISN, '$nama', '$surat', '$work', '$salary', '$respon',
+        '$condt', '$status', '$result');");
+		if($q_ins){
+			echo "<script>alert('Mahasiswa dengan nama ".$nama." hasil prediksi kelayakan adalah ".$result."'); 
+			window.location.href='../index.php?halaman=hasil-penelitian';</script>";
+		}
 	}
 // process_naive("TETAP", ">1JT", "BANYAK", "LAYAK", "PRIBADI");
 

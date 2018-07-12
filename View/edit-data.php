@@ -5,14 +5,9 @@
     $row = $show_latih->fetch_assoc();
     if($row){ ?>
       <div class="center">
-          <form class="form-horizontal" action="Model/process-naive-bayes.php" method="POST" target="_BLANK">
-            <div class="form-group">
-              <span class="col-sm-3">NISN</span> : 
-              
-              <div class="col-sm-9">
-                <input class="col-sm-12" name="NISN" required value="<?php echo $row['NISN']; ?>">
-              </div>
-            </div>
+          <form class="form-horizontal" action="Model/process-edit-training.php" method="POST">
+            
+            <input class="col-sm-12" hidden name="id" value="<?php echo $row['id']; ?>">
             <div class="form-group">
               <span class="col-sm-3">Nama</span> : 
               <div class="col-sm-9">
@@ -25,7 +20,7 @@
                 
                 <select class="form-control" name="surat" required value="<?php echo $row['surat_miskin']; ?>">
                   <option value="ADA">Ada</option>
-                  <option value="TIDAK ADA">Tidak Ada</option>
+                  <option value="TIDAK">Tidak Ada</option>
                 </select>
               </div>
             </div>

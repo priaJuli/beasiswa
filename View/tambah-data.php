@@ -1,20 +1,6 @@
 <div class="center">
-          <form class="form-horizontal" action="Model/process-naive-bayes.php" method="POST" target="_BLANK">
-            <?php 
-              if(isset($_POST['data-training'])){
-                $data_T = $_POST['data-training'];
-                ?>
-                  <input hidden name="data-training" value="<?php echo $data_T;?>">
-                <?php
-              }
-              else{
-                $data_T = "real";
-                ?>
-                  <input hidden name="data-training" value="<?php echo $data_T;?>">
-                <?php
-              }
-            ?>
-            
+          <form class="form-horizontal" action="Model/process-add-training.php" method="POST">
+                       
             <div class="form-group">
               <span class="col-sm-3">NISN</span> : 
               
@@ -35,7 +21,7 @@
                 <select class="form-control" name="surat" required>
                   <option value="">-- Pilih --</option>
                   <option value="ADA">Ada</option>
-                  <option value="TIDAK ADA">Tidak Ada</option>
+                  <option value="TIDAK">Tidak Ada</option>
                 </select>
               </div>
             </div>
