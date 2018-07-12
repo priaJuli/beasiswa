@@ -179,18 +179,22 @@
 			$ket_layak = $row1["keterangan"];
 			// if($row1["keterangan"] == "LAYAK"){
 				foreach ($row1 as $atr => $value) {
-					if($atr != "id" && $atr != "NISN" && $atr != "nama" && $atr != "surat_miskin" && $atr != "keterangan") {
+					if($atr != "id" && $atr != "NISN" && $atr != "nama" 
+						&& $atr != "surat_miskin" && $atr != "keterangan") {
 						
-						$cek_atr = mysqli_query($DBcon, "SELECT * FROM prob_yes WHERE text='$value' AND atribut='$atr' AND keterangan='$ket_layak';");
+						$cek_atr = mysqli_query($DBcon, "SELECT * FROM prob_yes WHERE text='$value' 
+							AND atribut='$atr' AND keterangan='$ket_layak';");
 						// print_r($cek_atr);
 
 						if(mysqli_num_rows($cek_atr) < 1){
 							// echo " ATR YES";
 							
-							$insert_term = mysqli_query($DBcon, "INSERT INTO prob_yes(atribut,text,value,keterangan) VALUES ('$atr', '$value', 1, '$ket_layak')");	
+							$insert_term = mysqli_query($DBcon, "INSERT INTO prob_yes(atribut,text,value,keterangan) 
+								VALUES ('$atr', '$value', 1, '$ket_layak')");	
 						}else{
 							$new_value = $cek_atr->fetch_assoc()['value'] +1;
-							$update_term = mysqli_query($DBcon, "UPDATE prob_yes SET value=$new_value WHERE text='$value' AND keterangan='$ket_layak';");
+							$update_term = mysqli_query($DBcon, "UPDATE prob_yes SET value=$new_value WHERE text='$value' 
+								AND keterangan='$ket_layak';");
 							// echo "ATR ".$value." telah ada";
 						}
 					}

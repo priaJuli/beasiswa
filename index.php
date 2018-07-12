@@ -92,6 +92,114 @@
       }
       
   ?>
+  <div class="container">
+    <div class="modal fade" id="useredit" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" action="Model/process-add-user.php" method="POST">
+                       
+            <div class="form-group">
+              <span class="col-sm-3">Username</span> : 
+              
+              <div class="col-sm-9">
+                <input class="col-sm-12" name="username" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="col-sm-3">Password</span> : 
+              <div class="col-sm-9">
+                <input class="col-sm-12" name="password" required>
+              </div>              
+            </div>
+            <div class="form-group">
+              <span class="col-sm-3">Role</span> :               
+              <div class="col-sm-9">
+                
+                <select class="form-control" name="surat" required>
+                  <option value="">-- Pilih --</option>
+                  <option value="admin">Admin</option>
+                  <option value="member">Member</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">  
+              <div class="col-sm-12">
+                <input class="col-sm-2" type="submit" value="Simpan" name="naive">   
+                <button class="col-sm-2" onclick="window.location.href='index.php?halaman=training'">Batal</button>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal fade" id="useradd" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" action="Model/process-add-user.php" method="POST">
+                       
+            <div class="form-group">
+              <span class="col-sm-3">Username</span> : 
+              
+              <div class="col-sm-9">
+                <input class="col-sm-12" name="username" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="col-sm-3">Password</span> : 
+              <div class="col-sm-9">
+                <input class="col-sm-12" name="password" required>
+              </div>              
+            </div>
+            <div class="form-group">
+              <span class="col-sm-3">Role</span> :               
+              <div class="col-sm-9">
+                
+                <select class="form-control" name="role" required>
+                  <option value="">-- Pilih --</option>
+                  <option value="admin">Admin</option>
+                  <option value="member">Member</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">  
+              <div class="col-sm-12">
+                <input class="col-sm-2" type="submit" value="Simpan" name="adduser">   
+                <button class="col-sm-2" data-dismiss="modal">Batal</button>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  </div>
   
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->

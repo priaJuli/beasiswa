@@ -15,5 +15,8 @@
       }elseif($_GET['halaman'] == 'hasil-penelitian') {
         include_once "View/halaman-hasil-penelitian.php"; 
 
+      }elseif($_GET['halaman'] == 'data-user') {
+        include_once "View/halaman-data-user.php"; 
+
       }    
 ?>
