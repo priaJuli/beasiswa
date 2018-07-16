@@ -18,6 +18,7 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
   <style>
   a{
     color: #b30000;
@@ -63,6 +64,7 @@
     width: 100px;
 
   }
+  
   </style>
   
   

@@ -18,5 +18,8 @@
       }elseif($_GET['halaman'] == 'data-user') {
         include_once "View/halaman-data-user.php"; 
 
+      }elseif($_GET['halaman'] == 'hasil-akurasi') {
+        include_once "View/halaman-hasil-akurasi.php"; 
+
       }    
 ?>
