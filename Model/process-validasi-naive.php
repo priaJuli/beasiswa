@@ -50,11 +50,11 @@ $res1 = $tidak_latih->fetch_row()[0];
   <tbody id="data-content">
 <?php
 
-$cek = mysqli_query($DBcon, "SELECT * FROM data_training A, data_testing B WHERE A.id = B.id AND A.keterangan='LAYAK' AND B.kesimpulan='TIDAK LAYAK'");
+$cek = mysqli_query($DBcon, "SELECT * FROM data_training A, data_testing B WHERE A.id = B.id AND A.keterangan='LAYAK' AND B.kesimpulan='TIDAK LAYAK' AND B.id BETWEEN 1 AND 100");
 // var_dump($cek);
 $miss = $cek->num_rows;
 
-$cek1 = mysqli_query($DBcon, "SELECT * FROM data_training A, data_testing B WHERE A.id = B.id AND A.keterangan='TIDAK LAYAK' AND B.kesimpulan='LAYAK'");
+$cek1 = mysqli_query($DBcon, "SELECT * FROM data_training A, data_testing B WHERE A.id = B.id AND A.keterangan='TIDAK LAYAK' AND B.kesimpulan='LAYAK' AND B.id BETWEEN 1 AND 100");
 // var_dump($cek);
 $miss1 = $cek1->num_rows;
 
