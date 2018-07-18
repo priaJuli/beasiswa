@@ -230,7 +230,23 @@
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
-    
+    <script type="text/javascript">
+      function ConfirmDelete(url) {
+        var x = confirm("Are you sure you want to delete?");
+        if (x)
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (response) {
+                    alert("Data uji berhasil dihapus");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("error");
+                }
+            });           
+    }
+    </script>
   </div>
 </body>
 

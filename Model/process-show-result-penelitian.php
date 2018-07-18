@@ -18,7 +18,7 @@ $show_latih = mysqli_query($DBcon, "SELECT * FROM data_testing");
       <th>Kondisi</th>
       <th>Status</th>
       <th>Kelayakan</th>
-      
+      <th>Action</th>
     </tr>
   </thead>
   <tfoot>
@@ -32,7 +32,7 @@ $show_latih = mysqli_query($DBcon, "SELECT * FROM data_testing");
       <th>Kondisi</th>
       <th>Status</th>
       <th>Kelayakan</th>
-      
+      <th>Action</th>
       
     </tr>
   </tfoot>
@@ -49,6 +49,7 @@ ini_set('max_execution_time', 300);
 //end foreach string1
   
   foreach ($show_latih as $result12) {
+    $id = $result12['id'];
   ?>
     <tr>
       <td><?php echo $result12["NISN"];?></td>
@@ -60,7 +61,7 @@ ini_set('max_execution_time', 300);
       <td><?php echo $result12["kondisi_rumah"];?></td>
       <td><?php echo $result12["status_rumah"];?></td>
       <td><?php echo $result12["kesimpulan"];?></td>
-      
+      <td><a id="deluji" onclick="ConfirmDelete('Model/process-del-uji.php?id=<?php echo $id;?>')"><i class="fa fa-trash fa-fw"></i></a> </td>
     </tr>
     <?php
   }

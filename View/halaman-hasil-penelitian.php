@@ -13,7 +13,7 @@
       <div class="card mb-3">
         <div class="card-header">
           <button onclick="window.location.href='index.php?halaman=hasil-akurasi'">Validasi Confusion Matrix</button>
-            <p class="h5" style="text-align: center;">Result Clasification Data Testing</p>
+            <p class="h5" style="text-align: center;">Result Clasification Data Uji</p>
         </div>
         <div class="card-body">
         
